@@ -196,7 +196,7 @@ ${data.get("message") || ""}`;
       const limit = rect.height * .09;
       el.style.setProperty("--parallax-y", `${Math.max(-limit, Math.min(limit, distance))}px`);
     });
-    const marker = (((_a2 = document.querySelector("header")) == null ? void 0 : _a2.getBoundingClientRect().height) || 80) + 120;
+    const marker = (((_a2 = document.querySelector("header")) == null ? void 0 : _a2.getBoundingClientRect().height) || 80) + 240;
     let active = (_b = targets[0]) == null ? void 0 : _b.link;
     for (const item of targets) {
       if (item.section && item.section.getBoundingClientRect().top <= marker) active = item.link;
