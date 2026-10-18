@@ -169,7 +169,7 @@ function initializeZenvyra() {
   if (location.hash === "#zenContactModal") setModal(true);
 
   // ===== Contact form: save to Google Sheet + open WhatsApp =====
-  const SHEET_URL = "https://script.google.com/macros/s/AKfycbxroo_4Iq_l58w6kI87KY5LnqUeYtQlrQ5f91VvvOuV7HNYnTKtWdT6L6P-IAKbOd7Jew/exec";
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbzrT3NizU2wJlM1GA0eyhlZU6Zur3OXpTvYv1mCd8U6xi0BILJJa628Hqv31oP-EWh7Jw/exec";
   const form = document.querySelector("#zenContactForm");
   form?.addEventListener("submit", (event) => {
     event.preventDefault();
