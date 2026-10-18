@@ -167,17 +167,42 @@ function initializeZenvyra() {
     if (event.matches) setMenu(false);
   }, { signal });
   if (location.hash === "#zenContactModal") setModal(true);
+
+  // ===== Contact form: save to Google Sheet + open WhatsApp =====
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbxroo_4Iq_l58w6kI87KY5LnqUeYtQlrQ5f91VvvOuV7HNYnTKtWdT6L6P-IAKbOd7Jew/exec";
   const form = document.querySelector("#zenContactForm");
-  form == null ? void 0 : form.addEventListener("submit", (event) => {
+  form?.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(form);
-    const message = `Hi Zenvyra! I'm ${data.get("name") || ""} (${data.get("email") || ""})
-Brand: ${data.get("brand") || ""}
-Need: ${data.get("need") || ""}
+    const lead = {
+      name: data.get("name") || "",
+      email: data.get("email") || "",
+      brand: data.get("brand") || "",
+      need: data.get("need") || "",
+      message: data.get("message") || ""
+    };
+    const waText = `Hi Zenvyra! I'm ${lead.name} (${lead.email})
+Brand: ${lead.brand}
+Need: ${lead.need}
 
-${data.get("message") || ""}`;
-    window.open(`https://wa.me/917339548648?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+${lead.message}`;
+
+    // Save to Google Sheet
+    try {
+      fetch(SHEET_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(lead),
+        keepalive: true
+      }).catch(() => {});
+    } catch (e) {}
+
+    // Open WhatsApp
+    window.open(`https://wa.me/917339548648?text=${encodeURIComponent(waText)}`, "_blank", "noopener");
+    form.reset();
   }, { signal });
+
   (_a = document.querySelector(".footer-email-form")) == null ? void 0 : _a.addEventListener("submit", (event) => event.preventDefault(), { signal });
   const links = Array.from((nav == null ? void 0 : nav.querySelectorAll('a[href^="#"]')) || []);
   const targets = links.map((link) => ({ link, section: document.getElementById(link.hash.slice(1)) })).filter((item) => item.section);
